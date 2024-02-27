@@ -8,36 +8,18 @@ namespace Assignment1.Controllers
     public class BookController : Controller
     {
         
-        public IActionResult Index()
+        public IActionResult Index(string Name, string Author, int PageNumber, DateTime DueDate)
         {
-            return View(); 
+            Book kitap = new Book();
+            kitap.Name = Name;
+            kitap.Author = Author;
+            kitap.PageNumber = PageNumber;
+            kitap.DueDate = DueDate;
+            return View(kitap); 
         }
+
 
       
-        [HttpPost]
-        public IActionResult Index(Book book)
-        {
-            if (book == null)
-            {
-                
-                return NotFound();
-            }
-
-            
-            int remainingDays = (int)(book.DueDate - DateTime.Today).TotalDays;
-
-            string color;
-            if (remainingDays < 0)
-                color = "red"; 
-            else if (remainingDays < 3)
-                color = "yellow"; 
-            else
-                color = "green"; 
-
-            ViewBag.RemainingDaysColor = color;
-            ViewBag.RemainingDays = remainingDays;
-
-            return View(book);
-        }
+       
     }
 }

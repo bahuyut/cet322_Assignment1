@@ -1,4 +1,4 @@
-﻿@model List<Book>
+﻿@model Book
 
 <!DOCTYPE html>
 <html>
@@ -6,36 +6,7 @@
     <title>Book Details</title>
 </head>
 <body>
-    <h2>Book Details</h2>
+    <h2> @Model.Author</h2>
 
-    @if (Model != null && Model.Count > 0)
-    {
-        foreach (var book in Model)
-        {
-            <div>
-                <p>Name: @book.Name</p>
-                <p>Author: @book.Author</p>
-                <p>Page Number: @book.PageNumber</p>
-                <p>Due Date: @book.DueDate.ToShortDateString()</p>
-
-                @if (ViewBag.RemainingDaysColor == "red")
-                {
-                    <p style="color:red;">Due date has passed!</p>
-                }
-                else if (ViewBag.RemainingDaysColor == "yellow")
-                {
-                    <p style="color:yellow;">@ViewBag.RemainingDays days left until due date</p>
-                }
-                else
-                {
-                    <p style="color:green;">@ViewBag.RemainingDays days left until due date</p>
-                }
-            </div>
-        }
-    }
-    else
-    {
-        <p>No book information available.</p>
-    }
 </body>
 </html>

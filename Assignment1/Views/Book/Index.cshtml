@@ -1,41 +1,63 @@
-﻿@model List<Book>
+﻿@model Book
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Book Details</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .overdue {
+            background-color: red;
+            color: white;
+        }
+
+        .dueSoon {
+            background-color: yellow;
+        }
+
+        .notDue {
+            background-color: green;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <h2>Book Details</h2>
-
-    @if (Model != null && Model.Count > 0)
-    {
-        foreach (var book in Model)
-        {
-            <div>
-                <p>Name: @book.Name</p>
-                <p>Author: @book.Author</p>
-                <p>Page Number: @book.PageNumber</p>
-                <p>Due Date: @book.DueDate.ToShortDateString()</p>
-
-                @if (ViewBag.RemainingDaysColor == "red")
-                {
-                    <p style="color:red;">Due date has passed!</p>
-                }
-                else if (ViewBag.RemainingDaysColor == "yellow")
-                {
-                    <p style="color:yellow;">@ViewBag.RemainingDays days left until due date</p>
-                }
-                else
-                {
-                    <p style="color:green;">@ViewBag.RemainingDays days left until due date</p>
-                }
-            </div>
-        }
-    }
-    else
-    {
-        <p>No book information available.</p>
-    }
+    <table>
+        <tr>
+            <th>Name</th>
+            <td>@Model.Name</td>
+        </tr>
+        <tr>
+            <th>Author</th>
+            <td>@Model.Author</td>
+        </tr>
+        <tr>
+            <th>Page Number</th>
+            <td>@Model.PageNumber</td>
+        </tr>
+        <tr>
+            <th>Due Date</th>
+            <td class="
+                @(Model.DueDate < DateTime.Now ? "overdue" :
+                (Model.DueDate - DateTime.Now).Days <= 0 ? "dueSoon" : "notDue")">
+                @Model.DueDate.ToShortDateString()
+            </td>
+        </tr>
+    </table>
 </body>
 </html>
